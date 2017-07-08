@@ -1,22 +1,20 @@
 import { Circle, Game, Scene } from 'athenajs';
 
-let myGame = new Game({
+const myGame = new Game({
     name: 'sample-circle',
     showFps: true,
     width: 320,
     height: 200
 });
 
-let myScene = new Scene();
+// create a new scene
+const myScene = new Scene();
 
-myGame.onReady(function () {
-    this.setScene(myScene);
-});
+// add a new circle object
+myScene.addObject(new Circle({
+    w: 20,
+    h: 20
+}));
 
-myScene.onStart(function () {
-    let myCircle = new Circle({
-        w: 20,
-        h: 20
-    });
-    this.addObject(myCircle);
-});
+// set myScene as the current active scene
+myGame.setScene(myScene);

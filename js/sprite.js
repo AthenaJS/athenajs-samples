@@ -1,19 +1,16 @@
 import { Sprite, Game, Scene } from 'athenajs';
 
-let myGame = new Game({
+const myGame = new Game({
     name: 'sample-sprite',
     showFps: true,
     width: 80,
     height: 80
 });
 
-myGame.onReady(function () {
-    let myScene = new Scene();
-    myScene.onStart(function () {
-        let mySprite = new Sprite();
-        mySprite.addAnimation('runningMan', 'img/axeBandit.png', { frameWidth: 80, frameDuration: 4 }).then(() => {
-            this.addObject(mySprite);
-        });
-    });
-    this.setScene(myScene);
-});
+const myScene = new Scene(),
+    mySprite = new Sprite();
+
+mySprite.addAnimation('runningMan', 'img/axeBandit.png', { frameWidth: 80, frameDuration: 4 });
+myScene.addObject(mySprite);
+
+myGame.setScene(myScene);

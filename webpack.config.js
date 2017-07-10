@@ -4,7 +4,7 @@ var path = require('path'),
 module.exports = {
     entry: [
         'webpack-dev-server/client?http://127.0.0.1:8888',
-        './js/toto.js'
+        './js/sprite.js'
     ],
     output: {
         path: __dirname,

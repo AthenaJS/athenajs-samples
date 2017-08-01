@@ -10,7 +10,12 @@ const myGame = new Game({
 const myScene = new Scene(),
     mySprite = new Sprite();
 
-mySprite.addAnimation('runningMan', 'img/axeBandit.png', { frameWidth: 80, frameDuration: 4 });
+mySprite.addAnimation('runningMan', 'img/axeBandit.png', {
+    numFrames: 8,
+    frameWidth: 80,
+    frameHeight: 80,
+    frameDuration: 4
+});
 myScene.addObject(mySprite);
 
 myGame.setScene(myScene);

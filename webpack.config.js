@@ -4,7 +4,7 @@ var path = require('path'),
 module.exports = {
     entry: [
         'webpack-dev-server/client?http://127.0.0.1:8888',
-        './js/sprite.js'
+        './js/circle.js'
     ],
     output: {
         path: __dirname,
@@ -18,7 +18,12 @@ module.exports = {
                 test: /\.js$/,
                 loader: 'babel-loader?presets[]=es2015',
                 exclude: /node_modules|athena\.js/
-            }
+            },
+            {
+                test: /athena\.js$/,
+                use: ["source-map-loader"],
+                enforce: "pre"
+            }            
         ]
     },
     devServer: {

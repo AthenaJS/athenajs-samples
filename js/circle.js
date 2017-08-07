@@ -1,11 +1,11 @@
 import { Circle, Game, Scene } from 'athenajs';
 
-const myGame = new Game({
-    name: 'sample-circle',
-    showFps: true,
-    width: 320,
-    height: 200
-});
+// const myGame = new Game({
+//     name: 'sample-circle',
+//     showFps: true,
+//     width: 320,
+//     height: 200
+// });
 
 // create a new scene
 const myScene = new Scene();
@@ -17,4 +17,5 @@ myScene.addObject(new Circle({
 }));
 
 // set myScene as the current active scene
-myGame.setScene(myScene);
+// myGame.setScene(myScene);
+export default myScene;

@@ -4,7 +4,7 @@ var path = require('path'),
 module.exports = {
     entry: [
         'webpack-dev-server/client?http://127.0.0.1:8888',
-        './js/circle.js'
+        './js/index.js'
     ],
     output: {
         path: __dirname,
@@ -23,7 +23,7 @@ module.exports = {
                 test: /athena\.js$/,
                 use: ["source-map-loader"],
                 enforce: "pre"
-            }            
+            }
         ]
     },
     devServer: {

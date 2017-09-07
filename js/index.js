@@ -1,18 +1,30 @@
 import { Game } from 'athenajs';
 import sceneCircle from 'circle';
 import sceneSprite from 'sprite';
+import sceneObjects from 'scenes/objects_scene';
 
 const myGame = new Game({
     name: 'athena-samples',
     showFps: true,
-    width: 80,
-    height: 80
-});
+    width: 320,
+    height: 200
+}),
+    scenes = [
+        sceneCircle,
+        sceneSprite,
+        sceneObjects
+    ];
 
-myGame.setScene(sceneCircle);
+let currentScene = 0;
+
+myGame.setScene(scenes[currentScene]);
 
 window.onload = () => {
     document.getElementById('nextScene').addEventListener('click', () => {
-        myGame.setScene(myGame.scene === sceneSprite ? sceneCircle : sceneSprite);
+        currentScene++;
+        if (currentScene > scenes.length - 1) {
+            currentScene = 0;
+        }
+        myGame.setScene(scenes[currentScene]);
     });
 }

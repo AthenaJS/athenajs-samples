@@ -7,7 +7,8 @@ const myGame = new Game({
     name: 'athena-samples',
     showFps: true,
     width: 320,
-    height: 200
+    height: 200,
+    debug: true
 }),
     scenes = [
         sceneCircle,

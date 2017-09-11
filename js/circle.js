@@ -32,7 +32,7 @@ class Circle2 extends Circle {
 
         if (this.y >= this.height) {
             this.y = this.height;
-            this.vy *= -0.9;
+            this.vy *= -0.95;
         }
     }
 }

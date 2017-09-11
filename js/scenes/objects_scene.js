@@ -1,4 +1,4 @@
-import { BitmapText, Scene, ResourceManager as RM } from 'athenajs';
+import { BitmapText, Scene } from 'athenajs';
 
 let scene = new Scene(),
     bitmapText = new BitmapText('bitmaptext', {

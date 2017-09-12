@@ -1,4 +1,5 @@
-import { Circle, Game, Scene } from 'athenajs';
+import { Scene } from 'athenajs';
+import { MyCircle, MySprite } from 'objects/my_objects';
 
 // const myGame = new Game({
 //     name: 'sample-circle',
@@ -11,31 +12,18 @@ import { Circle, Game, Scene } from 'athenajs';
 const myScene = new class objectsScene extends Scene {
     start() {
         // add a new circle object
-        this.addObject(new Circle2({
+        this.addObject(new MyCircle({
             w: 20,
             h: 20
         }));
+
+        const sprite = new MySprite();
+        sprite.x = 50;
+        sprite.y = 50;
+
+        this.addObject(sprite);
     }
 }();
-
-class Circle2 extends Circle {
-    constructor(options) {
-        super(options);
-        this.vx = 0;
-        this.vy = 0;
-        this.gravity = 0.1;
-        this.height = 200;
-    }
-    update() {
-        this.y += this.vy;
-        this.vy += this.gravity;
-
-        if (this.y >= this.height) {
-            this.y = this.height;
-            this.vy *= -0.95;
-        }
-    }
-}
 
 // set myScene as the current active scene
 // myGame.setScene(myScene);

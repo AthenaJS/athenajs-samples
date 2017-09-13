@@ -1,5 +1,11 @@
-import { Circle, Sprite } from 'athenajs';
+import { Circle, Sprite, BitmapText } from 'athenajs';
 
+/**
+ * Very simple circle example with a bounce behavior
+ * 
+ * @class MyCircle
+ * @extends {Circle}
+ */
 class MyCircle extends Circle {
     constructor(options) {
         super(options);
@@ -19,17 +25,16 @@ class MyCircle extends Circle {
     }
 }
 
+/**
+ * 
+ * Very simple sprite with a single 'run' animation
+ * 
+ * @class MySprite
+ * @extends {Sprite}
+ */
 class MySprite extends Sprite {
-    constructor() {
-        super('mySprite');
-
-        this.addAnimation('jump', 'img/sprites.png', {
-            numFrames: 10,
-            frameWidth: 60,
-            frameHeight: 72,
-            frameDuration: 2,
-            offsetY: 72
-        });
+    constructor(options) {
+        super('mySprite', options);
 
         this.addAnimation('run', 'img/sprites.png', {
             numFrames: 10,
@@ -37,9 +42,21 @@ class MySprite extends Sprite {
             frameHeight: 72,
             frameDuration: 2
         });
-
-        this.setAnimation('run');
     }
 }
 
-export { MyCircle, MySprite };
+class MyFont extends BitmapText {
+    constructor(options) {
+        super('myFont', Object.assign({
+            w: 320,
+            h: 200,
+            charWidth: 32,
+            charHeight: 32,
+            imageSrc: 'img/bitmapFont.png',
+            offsetX: 34,
+            startY: 2
+        }, options));
+    }
+}
+
+export { MyCircle, MySprite, MyFont };

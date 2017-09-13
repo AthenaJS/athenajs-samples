@@ -1,15 +1,17 @@
 import { Scene } from 'athenajs';
-import { MyCircle, MySprite } from 'objects/my_objects';
-
-// const myGame = new Game({
-//     name: 'sample-circle',
-//     showFps: true,
-//     width: 320,
-//     height: 200
-// });
+import { MyCircle, MySprite, MyFont } from 'objects/my_objects';
 
 // create a new scene
 const myScene = new class objectsScene extends Scene {
+    /**
+     * Load anny need resources here
+     * 
+     */
+    setup() {
+        debugger;
+        this.loadImage('img/bitmapFont.png', 'myFont');
+        this.loadImage('img/sprites.png', 'mySheet');
+    }
     start() {
         // add a new circle object
         this.addObject(new MyCircle({
@@ -17,11 +19,14 @@ const myScene = new class objectsScene extends Scene {
             h: 20
         }));
 
-        const sprite = new MySprite();
-        sprite.x = 50;
-        sprite.y = 50;
+        this.addObject(new MySprite({
+            x: 50,
+            y: 50
+        }));
 
-        this.addObject(sprite);
+        this.addObject(new MyFont({
+            text: 'AthenaJS\nRulez'
+        }));
     }
 }();
 

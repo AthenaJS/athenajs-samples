@@ -1,19 +1,22 @@
 import { Scene, Text } from 'athenajs';
-import { MyCircle, MySprite, MyFont } from 'objects/my_objects';
+import { MyCircle, MySprite, MyFont } from 'objects/sample_objects';
 
 // create a new scene
 const myScene = new class objectsScene extends Scene {
     /**
      * Load anny need resources here
-     * 
+     *
      */
     setup() {
         this.loadImage('img/bitmapFont.png', 'myFont');
         this.loadImage('img/sprites.png', 'mySheet');
+        this.loadImage('img/sballer_sprites.png', 'sballer');
     }
     start() {
         const font = new MyFont({
-            text: 'AthenaJS\nRulez'
+            text: 'AthenaJS\nRulez',
+            x: 0,
+            y:80
         }),
             circle = new MyCircle({
                 w: 20,
@@ -32,17 +35,24 @@ const myScene = new class objectsScene extends Scene {
 
 
         this.addObject([
-            text,
+            font,
             circle,
             sprite
         ]);
 
+        font.animate('Rotate', {
+            startValue: 0,
+            endValue: 2 * Math.PI,
+            loop: Infinity,
+            duration: 4000
+        });
+
         sprite.animate('Custom', {
             startValue: 0,
             endValue: 2,
+            duration: 1000,
             loop: Infinity,
-            duration: 2000,
-            callback: (val) => {
+            callback: val => {
                 sprite.setScale(val);
             }
         });
@@ -58,6 +68,4 @@ const myScene = new class objectsScene extends Scene {
     }
 }();
 
-// set myScene as the current active scene
-// myGame.setScene(myScene);
 export default myScene;

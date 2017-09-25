@@ -1,17 +1,19 @@
 import { Scene, Text } from 'athenajs';
-import { MyCircle, MySprite, MyFont } from 'objects/my_objects';
+import { MyCircle, MySprite, MyFont } from 'objects/sample_objects';
 
 // create a new scene
 const myScene = new class objectsScene extends Scene {
     /**
      * Load anny need resources here
-     * 
+     *
      */
     setup() {
         this.loadImage('img/bitmapFont.png', 'myFont');
         this.loadImage('img/sprites.png', 'mySheet');
+        this.loadImage('img/sballer_sprites.png', 'sballer');
     }
     start() {
+        console.log('scene1');
         this.addObject(new MyFont({
             text: 'AthenaJS\nRulez'
         }));
@@ -36,6 +38,4 @@ const myScene = new class objectsScene extends Scene {
     }
 }();
 
-// set myScene as the current active scene
-// myGame.setScene(myScene);
 export default myScene;

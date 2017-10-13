@@ -1,5 +1,5 @@
 import { Scene, Text } from 'athenajs';
-import { MyCircle, MySprite, MyFont } from 'objects/sample_objects';
+import { MyCircle, MySprite, MyFont } from '../objects/sample_objects';
 
 // create a new scene
 const myScene = new class objectsScene extends Scene {

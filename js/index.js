@@ -1,6 +1,6 @@
 import { Game, Dom } from 'athenajs';
-import sceneObjects from 'scenes/scene1';
-import sceneAnimObjects from 'scenes/scene2';
+import sceneObjects from './scenes/scene1';
+import sceneAnimObjects from './scenes/scene2';
 
 const myGame = new Game({
     name: 'athena-samples',

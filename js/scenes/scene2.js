@@ -1,5 +1,5 @@
 import { Scene, Text } from 'athenajs';
-import { MyCircle, MySprite, MyFont } from 'objects/sample_objects';
+import { MyCircle, MySprite, MyFont } from '../objects/sample_objects';
 
 // create a new scene
 const myScene = new class objectsScene extends Scene {
@@ -16,7 +16,7 @@ const myScene = new class objectsScene extends Scene {
         const font = new MyFont({
             text: 'AthenaJS\nRulez',
             x: 0,
-            y:80
+            y: 80
         }),
             circle = new MyCircle({
                 w: 20,

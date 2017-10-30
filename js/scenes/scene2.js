@@ -2,7 +2,7 @@ import { Scene, Text } from 'athenajs';
 import { MyCircle, MySprite, MyFont } from '../objects/sample_objects';
 
 // create a new scene
-const myScene = new class objectsScene extends Scene {
+const myScene = new class objectsFxScene extends Scene {
     /**
      * Load anny need resources here
      *
@@ -36,6 +36,7 @@ const myScene = new class objectsScene extends Scene {
 
         this.addObject([
             font,
+            text,
             circle,
             sprite
         ]);
@@ -56,6 +57,20 @@ const myScene = new class objectsScene extends Scene {
                 sprite.setScale(val);
             }
         });
+
+        text.animate('Rotate', {
+            startValue: 0,
+            endValue: 2 * Math.PI,
+            loop: Infinity,
+            duration: 8000
+        });
+
+        // text.animate('Rotate', {
+        //     startValue: 0,
+        //     endValue: 2 * Math.PI,
+        //     loop: Infinity,
+        //     duration: 4000
+        // });
         // add a new circle object
         // this.addObject();
 

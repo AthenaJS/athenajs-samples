@@ -15,15 +15,15 @@ class MyCircle extends Canvas {
     }
 
     render() {
-        this.circle(0, 0, this.w, this.h, this.w / 2, 'red');
+        this.circle(0, 0, this.width, this.height, this.width / 2, 'red');
     }
 
     update() {
         this.y += this.vy;
         this.vy += this.gravity;
 
-        if (this.y >= 200 - this.h) {
-            this.y = 200 - this.h;
+        if (this.y >= 200 - this.height) {
+            this.y = 200 - this.height;
             this.vy *= -0.95;
         }
     }
@@ -58,8 +58,8 @@ class MySprite extends Sprite {
 class MyFont extends BitmapText {
     constructor(options) {
         super('myFont', Object.assign({
-            w: 320,
-            h: 64,
+            width: 320,
+            height: 64,
             charWidth: 32,
             charHeight: 32,
             imageSrc: 'img/bitmapFont.png',

@@ -19,8 +19,8 @@ const myScene = new class objectsFxScene extends Scene {
             y: 80
         }),
             circle = new MyCircle({
-                w: 20,
-                h: 20
+                width: 20,
+                height: 20
             }),
             text = new Text("nextString", {
                 text: "Canvas text",

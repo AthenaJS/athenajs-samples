@@ -1,4 +1,4 @@
-import { Circle, Sprite, BitmapText } from 'athenajs';
+import { Canvas, Sprite, BitmapText } from 'athenajs';
 
 /**
  * Very simple circle example with a bounce behavior
@@ -6,20 +6,24 @@ import { Circle, Sprite, BitmapText } from 'athenajs';
  * @class MyCircle
  * @extends {Circle}
  */
-class MyCircle extends Circle {
+class MyCircle extends Canvas {
     constructor(options) {
-        super(options);
+        super(Canvas.name, options);
         this.vx = 0;
         this.vy = 0;
         this.gravity = 0.1;
-        this.height = 200;
     }
+
+    render() {
+        this.circle(0, 0, this.w, this.h, this.w / 2, 'red');
+    }
+
     update() {
         this.y += this.vy;
         this.vy += this.gravity;
 
-        if (this.y >= this.height) {
-            this.y = this.height;
+        if (this.y >= 200 - this.h) {
+            this.y = 200 - this.h;
             this.vy *= -0.95;
         }
     }

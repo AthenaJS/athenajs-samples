@@ -20,8 +20,8 @@ const myScene = new class objectsScene extends Scene {
 
         // add a new circle object
         this.addObject(new MyCircle({
-            w: 20,
-            h: 20
+            width: 20,
+            height: 20
         }));
 
         this.addObject(new MySprite({

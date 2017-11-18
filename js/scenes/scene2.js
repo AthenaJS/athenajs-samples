@@ -1,5 +1,5 @@
 import { Scene, Text } from 'athenajs';
-import { MyCircle, MySprite, MyFont } from '../objects/sample_objects';
+import { Smiley, MySprite, MyFont } from '../objects/sample_objects';
 
 // create a new scene
 const myScene = new class objectsFxScene extends Scene {
@@ -18,9 +18,11 @@ const myScene = new class objectsFxScene extends Scene {
             x: 0,
             y: 80
         }),
-            circle = new MyCircle({
-                width: 20,
-                height: 20
+            smiley = new Smiley({
+                width: 40,
+                height: 40,
+                y: 100,
+                x: 10
             }),
             text = new Text("nextString", {
                 text: "Canvas text",
@@ -33,13 +35,19 @@ const myScene = new class objectsFxScene extends Scene {
                 y: 0
             });
 
-
         this.addObject([
             font,
             text,
-            circle,
+            smiley,
             sprite
         ]);
+
+        smiley.animate('Fade', {
+            startValue: 0,
+            endValue: 1,
+            loop: Infinity,
+            duration: 1000
+        });
 
         font.animate('Rotate', {
             startValue: 0,

@@ -1,5 +1,5 @@
 import { Scene, Text } from 'athenajs';
-import { MyCircle, MySprite, MyFont } from '../objects/sample_objects';
+import { Smiley, MySprite, MyFont } from '../objects/sample_objects';
 
 // create a new scene
 const myScene = new class objectsScene extends Scene {
@@ -19,9 +19,11 @@ const myScene = new class objectsScene extends Scene {
         }));
 
         // add a new circle object
-        this.addObject(new MyCircle({
-            width: 20,
-            height: 20
+        this.addObject(new Smiley({
+            width: 40,
+            height: 40,
+            y: 100,
+            x: 10
         }));
 
         this.addObject(new MySprite({

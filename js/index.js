@@ -2,6 +2,7 @@ import { Game, Dom } from 'athenajs';
 import sceneObjects from './scenes/scene1';
 import sceneAnimObjects from './scenes/scene2';
 import sceneBehavior from './scenes/scene3';
+import sceneEffects from './scenes/scene4';
 
 const myGame = new Game({
     name: 'athena-samples',
@@ -13,7 +14,8 @@ const myGame = new Game({
     scenes = [
         { label: 'Base Objects', scene: sceneObjects },
         { label: 'Object Animations', scene: sceneAnimObjects },
-        { label: 'Behavior Example: press ⟸ / ⟹', scene: sceneBehavior }
+        { label: 'Behavior Example: press ⟸ / ⟹', scene: sceneBehavior },
+        { label: 'Scene Effects', scene: sceneEffects }
     ];
 
 let currentScene = 0;

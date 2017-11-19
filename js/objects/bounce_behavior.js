@@ -29,6 +29,4 @@ class BounceBehavior extends Behavior {
     }
 }
 
-debugger;
-
 export default BounceBehavior;

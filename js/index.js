@@ -3,6 +3,7 @@ import sceneObjects from './scenes/scene1';
 import sceneAnimObjects from './scenes/scene2';
 import sceneBehavior from './scenes/scene3';
 import sceneEffects from './scenes/scene4';
+import sceneSound from './scenes/scene5';
 
 const myGame = new Game({
     name: 'athena-samples',
@@ -15,7 +16,8 @@ const myGame = new Game({
         { label: 'Base Objects', scene: sceneObjects },
         { label: 'Object Animations', scene: sceneAnimObjects },
         { label: 'Behavior Example: press ⟸ / ⟹', scene: sceneBehavior },
-        { label: 'Scene Effects', scene: sceneEffects }
+        { label: 'Scene Effects', scene: sceneEffects },
+        { label: 'Sound Example: press ⟸ / ⟹', scene: sceneSound },
     ];
 
 let currentScene = 0;
@@ -23,7 +25,7 @@ let currentScene = 0;
 function setNextScene() {
     const current = scenes[currentScene];
     myGame.setScene(current.scene);
-    Dom('#label').html(current.label);
+    Dom('#label').html(`${currentScene + 1}: ${current.label}`);
     currentScene++;
     if (currentScene > scenes.length - 1) {
         currentScene = 0;

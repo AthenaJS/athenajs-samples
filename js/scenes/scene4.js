@@ -1,4 +1,4 @@
-import { Scene, FX, Effect } from 'athenajs';
+import { Scene, FX, Effect, SimpleText, InputManager as Input } from 'athenajs';
 import { MyFont } from '../objects/sample_objects';
 
 class Skew extends Effect {
@@ -40,62 +40,62 @@ const myScene = new class objectsScene extends Scene {
         this.addObject(new MyFont({
             text: 'AthenaJS\nRulez',
             x: 0,
-            y: 80
+            y: 100
         }));
 
-        this.effect = 0;
-        this.randomEffect();
+        this.addObject(new SimpleText("nextString", {
+            text: "Press keys:\n1 ⟶ fade\n2 ⟶ skew\n3 ⟶ mosaic",
+            x: 100,
+            y: 0,
+            color: 'black'
+        }));
+
+        Input.installKeyCallback('1 2 3', 'up', (key, event) => {
+            this.applyEffect(parseInt(key, 10));
+        });
+
+        this.effectInProcess = false;
     }
 
-    randomEffect() {
-        console.log('random effect', this.effect);
+    applyEffect(effect) {
 
-        this.opacity = 1;
-        switch (this.effect) {
-            case 0:
-                this.fadeIn(1000).then(() => {
-                    setTimeout(() => this.randomEffect(), 800);
-                });
+        let promise;
+
+        if (this.effectInProcess) {
+            return;
+        } else {
+            this.effectInProcess = true;
+        }
+
+        switch (effect) {
+            case 1:
+                promise = this.fadeIn(2000);
                 break;
 
-            case 1:
-                this.animate('Skew', {
+            case 2:
+                promise = this.animate('Skew', {
                     when: 'post',
                     startValue: Math.PI / 3,
                     endValue: 0,
                     duration: 2000,
                     easing: 'easeOutBounce'
-                }).then(() => {
-                    setTimeout(() => this.randomEffect(), 800);
                 });
                 break;
 
-            case 2:
-                this.animate('Mosaic', {
+            case 3:
+                promise = this.animate('Mosaic', {
                     when: 'post',
                     duration: 1000,
                     startValue: 0.00005,
                     endValue: 0.2,
                     easing: 'linear'
-                }).then(() => {
-                    this.opacity = 1;
-                    setTimeout(() => this.randomEffect(), 800);
-                });
-                break;
-
-
-            case 3:
-                this.fadeOut(1000).then(() => {
-                    setTimeout(() => this.randomEffect(), 800);
                 });
                 break;
         }
 
-        this.effect++;
-
-        if (this.effect > 3) {
-            this.effect = 0;
-        }
+        promise.then(() => {
+            this.effectInProcess = false;
+        });
     }
 }();
 

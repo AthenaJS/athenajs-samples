@@ -17,14 +17,18 @@ class BounceBehavior extends Behavior {
         this.vy += this.gravity;
 
         if (sprite.y >= 200 - sprite.height) {
+            if (this.onVYChange) {
+                this.onVYChange(sprite.vx);
+            }
+
             sprite.y = 200 - sprite.height;
             this.vy *= -0.95;
         }
 
         if (Input.isKeyDown('RIGHT') && sprite.x < (320 - sprite.width)) {
-            sprite.x += 1
-        } else if (Input.isKeyDown('LEFT') && sprite.x > 0) {
-            sprite.x -= 1;
+            sprite.x += 2
+        } else if (Input.isKeyDown('LEFT') && sprite.x > 1) {
+            sprite.x -= 2;
         }
     }
 }

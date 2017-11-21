@@ -1,4 +1,4 @@
-import { Scene, Text } from 'athenajs';
+import { Scene, SimpleText } from 'athenajs';
 import { Smiley, MySprite, MyFont } from '../objects/sample_objects';
 
 // create a new scene
@@ -24,7 +24,7 @@ const myScene = new class objectsFxScene extends Scene {
                 y: 100,
                 x: 10
             }),
-            text = new Text("nextString", {
+            text = new SimpleText("nextString", {
                 text: "Canvas text",
                 x: 150,
                 y: 120,

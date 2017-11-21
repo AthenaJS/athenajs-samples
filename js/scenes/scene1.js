@@ -1,4 +1,4 @@
-import { Scene, Text } from 'athenajs';
+import { Scene, SimpleText } from 'athenajs';
 import { Smiley, MySprite, MyFont } from '../objects/sample_objects';
 
 // create a new scene
@@ -31,7 +31,7 @@ const myScene = new class objectsScene extends Scene {
             y: 100
         }));
 
-        this.addObject(new Text("nextString", {
+        this.addObject(new SimpleText("nextString", {
             text: "Canvas text",
             x: 150,
             y: 120,

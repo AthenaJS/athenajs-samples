@@ -4,6 +4,7 @@ import sceneAnimObjects from './scenes/scene2';
 import sceneBehavior from './scenes/scene3';
 import sceneEffects from './scenes/scene4';
 import sceneSound from './scenes/scene5';
+import sceneMap from './scenes/scene6';
 
 const myGame = new Game({
     name: 'athena-samples',
@@ -18,6 +19,7 @@ const myGame = new Game({
         { label: 'Behavior Example: press ⟸ / ⟹', scene: sceneBehavior },
         { label: 'Scene Effects', scene: sceneEffects },
         { label: 'Sound Example: press ⟸ / ⟹', scene: sceneSound },
+        { label: 'Map Example', scene: sceneMap },
     ];
 
 let currentScene = 0;

@@ -1,6 +1,6 @@
 import { Scene, AudioManager, SimpleText, InputManager as Input, Map } from 'athenajs';
 import MapData from '../map/map.js';
-import { Smiley } from '../objects/sample_objects';
+import { Tree, Bush } from '../map/sprites';
 
 // create a new scene
 const myScene = new class objectsScene extends Scene {
@@ -39,7 +39,6 @@ const myScene = new class objectsScene extends Scene {
     }
 
     start() {
-        debugger;
         // add a new circle object
         // this.addObject(new SimpleText("nextString", {
         //     text: "Press keys:\n ⟶ throw left\n ⟶ throw right\ncenter",
@@ -53,6 +52,12 @@ const myScene = new class objectsScene extends Scene {
         //     AudioManager.play('throw', false, 1, -10);
         // });
         this.createMap();
+        // put layer 0 in the background
+        this.setLayerPriority(0, true);
+        this.map.addObject(new Tree({
+            x: 200,
+            y: 100
+        }))
     }
 }();
 

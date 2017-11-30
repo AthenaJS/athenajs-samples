@@ -20,6 +20,11 @@ const myScene = new class objectsScene extends Scene {
             console.log('left');
             AudioManager.play('throw', false, 1, -10);
         });
+
+        Input.installKeyCallback('RIGHT', 'up', (key, event) => {
+            console.log('left');
+            AudioManager.play('throw', false, 1, -10);
+        });
     }
 }();
 

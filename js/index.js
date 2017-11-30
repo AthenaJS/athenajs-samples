@@ -22,7 +22,7 @@ const myGame = new Game({
         { label: 'Map Example', scene: sceneMap },
     ];
 
-let currentScene = 5;
+let currentScene = 0;
 
 function setNextScene() {
     const current = scenes[currentScene];

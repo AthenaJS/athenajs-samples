@@ -9,13 +9,15 @@ const myScene = new class objectsScene extends Scene {
     }
 
     createMap() {
-        // 928 x 256 px map
+        // 928 x 256 px map with a 320x200 viewport, 32x32 tiles
         const map = new Map({
             src: "tiles",
             tileWidth: 32,
             tileHeight: 32,
             width: 29 * 32,
-            height: 8 * 32
+            height: 8 * 32,
+            viewportW: 320,
+            viewportH: 200
         }),
             tiles = [];
 
@@ -54,10 +56,45 @@ const myScene = new class objectsScene extends Scene {
         this.createMap();
         // put layer 0 in the background
         this.setLayerPriority(0, true);
+        this.map.addObject(new Bush({
+            x: 80,
+            y: 126
+        }));
+
         this.map.addObject(new Tree({
-            x: 200,
-            y: 100
-        }))
+            x: 170,
+            y: 40
+        }));
+
+        this.map.addObject(new Bush({
+            x: 320,
+            y: 190
+        }));
+
+        this.map.addObject(new Tree({
+            x: 400,
+            y: 104
+        }));
+
+        this.map.addObject(new Bush({
+            x: 490,
+            y: 190
+        }));
+
+        this.map.addObject(new Bush({
+            x: 730,
+            y: 126
+        }));
+
+        this.map.addObject(new Tree({
+            x: 800,
+            y: 40
+        }));
+
+        this.map.addObject(new Bush({
+            x: 780,
+            y: 126
+        }));
     }
 }();
 

@@ -19,6 +19,15 @@ class Bush extends Sprite {
             offsetX: 177,
             offsetY: 128
         });
+
+        this.addAnimation('static2', 'tiles', {
+            numFrames: 1,
+            frameWidth: 73,
+            frameHeight: 32,
+            frameDuration: 1,
+            offsetX: 177,
+            offsetY: 160
+        });
     }
 }
 
@@ -36,11 +45,20 @@ class Tree extends Sprite {
 
         this.addAnimation('static', 'tiles', {
             numFrames: 1,
-            frameWidth: 73,
-            frameHeight: 32,
+            frameWidth: 51,
+            frameHeight: 116,
             frameDuration: 1,
-            offsetX: 177,
-            offsetY: 128
+            offsetX: 22,
+            offsetY: 43
+        });
+
+        this.addAnimation('static2', 'tiles', {
+            numFrames: 1,
+            frameWidth: 51,
+            frameHeight: 116,
+            frameDuration: 1,
+            offsetX: 118,
+            offsetY: 43
         });
     }
 }

@@ -17,13 +17,11 @@ const myScene = new class objectsScene extends Scene {
         }));
 
         Input.installKeyCallback('LEFT', 'up', (key, event) => {
-            console.log('left');
-            AudioManager.play('throw', false, 1, -10);
+            AudioManager.play('throw', false, 10, -10);
         });
 
         Input.installKeyCallback('RIGHT', 'up', (key, event) => {
-            console.log('left');
-            AudioManager.play('throw', false, 1, -10);
+            AudioManager.play('throw', false, 10, 10);
         });
     }
 }();

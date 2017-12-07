@@ -13,7 +13,6 @@ const myScene = new class objectsScene extends Scene {
         this.loadImage('img/sballer_sprites.png', 'sballer');
     }
     start() {
-        console.log('scene1');
         this.addObject(new MyFont({
             text: 'AthenaJS\nRulez'
         }));

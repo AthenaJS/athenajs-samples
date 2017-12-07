@@ -19,7 +19,7 @@ const myGame = new Game({
         { label: 'Behavior Example: press ⟸ / ⟹', scene: sceneBehavior },
         { label: 'Scene Effects', scene: sceneEffects },
         { label: 'Sound Example: press ⟸ / ⟹', scene: sceneSound },
-        { label: 'Map Example', scene: sceneMap },
+        { label: 'Map Example: press ⟸ / ⟹', scene: sceneMap },
     ];
 
 let currentScene = 0;

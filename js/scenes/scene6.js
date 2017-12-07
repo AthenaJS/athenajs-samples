@@ -1,4 +1,4 @@
-import { Scene, AudioManager, SimpleText, InputManager as Input, Map } from 'athenajs';
+import { Scene, AudioManager, SimpleText, InputManager as Input, Map, FX } from 'athenajs';
 import MapData from '../map/map.js';
 import { Tree, Bush } from '../map/sprites';
 
@@ -95,6 +95,24 @@ const myScene = new class objectsScene extends Scene {
             x: 780,
             y: 126
         }));
+
+        this.addObject(new SimpleText("string", {
+            text: "Multidirectional scrolling with easing :)",
+            x: 5,
+            y: 5,
+            color: 'black'
+        }));
+
+        this.map.duration = 2000;
+        this.map.setEasing('easeOutBounce');
+
+        Input.installKeyCallback('RIGHT', 'up', (key, event) => {
+            this.map.moveTo(-1000, -1000);
+        });
+
+        Input.installKeyCallback('LEFT', 'up', (key, event) => {
+            this.map.moveTo(0, 0);
+        });
     }
 }();
 

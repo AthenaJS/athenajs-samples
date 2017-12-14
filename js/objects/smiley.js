@@ -1,4 +1,4 @@
-import { Canvas, Behavior } from 'athenajs';
+import { Paint, Behavior } from 'athenajs';
 //     this.y += this.vy;
     //     this.vy += this.gravity;
 
@@ -13,9 +13,9 @@ import { Canvas, Behavior } from 'athenajs';
 * @class MyCircle
 * @extends {Circle}
 */
-class Smiley extends Canvas {
+class Smiley extends Paint {
     constructor(options) {
-        super(Canvas.name, options);
+        super(Paint.name, options);
         // this.vx = 0;
         // this.vy = 0;
         // this.gravity = 0.1;

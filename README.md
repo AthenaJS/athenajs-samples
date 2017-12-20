@@ -13,7 +13,7 @@ This repository contains 6 scenes covering the following [AthenaJS](https://gith
 
 ## Demo
 
-Head over to [https://athenajs.github.io/athenajs-samples/](https://athenajs.github.io/athenajs-samples/) for a demo.
+Head over to [athenajs-samples](https://athenajs.github.io/athenajs-samples/) for a demo.
 
 ## Installation
 
@@ -25,10 +25,14 @@ This will install dependencies, build athenajs-samples and start a development s
 
 ## Credits
 
- - The snowballer animated sprite was provided by [http://www.dumbmanex.com/bynd_freestuff.html](bynd)
+ - The snowballer animated sprite was provided by [bynd](http://www.dumbmanex.com/bynd_freestuff.html)
  - The scrolling tileset:
  - The AthenaJS bitmap font
  - The Sound:
+
+## Going further
+
+For more information, head over to the [AthenaJS'documentation](https://athenajs.github.io/athenajs/)
 
 ## License
 

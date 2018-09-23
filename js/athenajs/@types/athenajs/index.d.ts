@@ -6,9 +6,17 @@ declare module 'athenajs' {
     export function Dom(sel?: string | HTMLElement): _Dom;
     export class Scene{
         constructor(options?: SceneOptions);
+        map: Map;
         addObject(object: Drawable): Scene;
         addObject(array: Array<Drawable>): Scene;
-        loadImage(src: string, id:string):void;
+        animate(fxName: string, options: EffectOptions): any;
+        fadeIn(duration: number): void;
+        fadeOut(duration: number): void;
+        fadeInAndOut(inDuration: number, delay: number, outDuration: number): any;
+        loadAudio(src: string, id?: string | null): void;
+        loadImage(src: string, id: string): void;
+        setLayerPriority(layer: number, background: boolean): void;
+        setMap(map:Map|Object, x?:number, y?:number):void;
     }
     export class Game {
         constructor(options: GameOptions);
@@ -46,7 +54,438 @@ declare module 'athenajs' {
     }
 
     export class Map{
+        constructor(options:MapOptions)
+        addObject(obj: Drawable, layerIndex?: number): void;
+        addTileSet(tiles: Tile[]): void;
+        setData(map: Uint8Array, behaviors: Uint8Array): void;
+        setEasing(easing:string):void;
+        moveTo(x: number, y: number):void;
+        duration: number;
+    }
 
+    export class Tile{
+
+    }
+
+    interface MapOptions{
+        src: string,
+        tileWidth: number,
+        tileHeight: number,
+        width: number,
+        height: number,
+        viewportW: number,
+        viewportH: number
+    }
+
+    interface FXInstance{
+        addFX(fxName: string, FxClass: { new(options: EffectOptions, display: Display): Effect }): void;
+    }
+
+    export const FX: FXInstance;
+
+    export class _FX {
+        /**
+         * Creates the FX class, adding the linear easing
+         */
+        constructor();
+
+        /**
+         * Add a new Effect
+         * @param {String} fxName The name of the effect to add.
+         * @param {Effect} FxClass The Effect Class to add.
+         */
+        addFX(fxName: string, FxClass: { new(): Effect }): void;
+
+        /**
+         * Retrieve an effect Class by its name
+         *
+         * @param {String} fxName The name of the Effect to retrive.
+         * @returns {Effect} the effect Class or undefined
+         */
+        getEffect(fxName: string): Effect;
+
+        /**
+         * Add a new easing function for other objects to use
+         *
+         * @param {String} easingName The name of the easing.
+         * @param {Function} easingFn The function to be used for easing. This function may use these parameters: `x , t, b, c, d`
+        */
+        addEasing(easingName: string, easingFn: (x?: number, t?: number, b?: number, c?: number, d?: number) => void):void;
+
+        /**
+         * Retrieves an easing function
+         *
+         * @param {String} easingName The name of the easing function to retrive.
+         * @returns {Function} The easing function, or linear function if it didn't exist.
+         */
+        getEasing(easingName: string): (x?: number, t?: number, b?: number, c?: number, d?: number) => void;
+    }
+
+    interface EffectOptions {
+
+    }
+
+    export class Effect {
+        width: number;
+        height: number;
+        buffer: RenderingContext;
+        animProgress: number;
+        startValue: number;
+        ended:boolean;
+        /**
+         * This the class constructor. Default options are:
+         *
+         * @param {Object} options
+         * @param {Number} options.startValue The start value of the effect.
+         * @param {Number} options.endValue The end value of the effect.
+         * @param {Number} options.duration The duration of the effect (ms).*
+         * @param {Boolean} options.loop Set to true to make the effect loop.
+         * @param {Display} display Reference to the Display in case a buffer is needed.
+         */
+        constructor(options: EffectOptions, display: Display);
+
+        /**
+         * Changes the easing function used for the ffect
+         *
+         * @param {Function} easing The new easing function.
+         */
+        setEasing(easing: (x?: number, t?: number, b?: number, c?: number, d?: number) => void): void;
+
+        /**
+         * Called when the ffect is started.
+         *
+         * This method can be overriden but the super should always be called
+         */
+        start(): any;
+
+        /**
+         * called when the effect is stopped
+         */
+        stop(object: any, setEndValue: any): void;
+
+        /**
+         * Calculates current animation process
+         *
+         * This method can be overridden but the super should always be calle dfirst
+         */
+        process(ctx: RenderingContext, fxCtx?: RenderingContext, obj?: any): void;
+    }
+
+    // why do we need this ?
+    type RenderingContext = CanvasRenderingContext2D;
+
+    interface DisplayOptions {
+        width: number,
+        height: number,
+        type: string,
+        layers?: boolean[],
+        name: string
+    }
+
+    export class Display {
+        /**
+         * Creates a new Display instance
+         *
+         * @param {Object} options
+         * @param {Number} [options.width=1024] The width of the display.
+         * @param {Number} [options.height=768] The height of the display.
+         * @param {String} [options.type] What type of rendere to use, only '2d' supported for now.
+         * @param {Array<Boolean>} [options.layers] An array describing each layer that will be added: [true, true] will create two background layers, set to true for a foreground layer.
+         * @param {String} options.name The name of the display.
+         * @param {(String|HTMLElement)} target The target where the game DOM element should be appended.
+         */
+        constructor(options: DisplayOptions, target: string | HTMLElement);
+
+        /**
+         * Creates a new (offscreen) drawing buffer
+         *
+         * @param {Number} width width of the buffer
+         * @param {Number} height height of the buffer
+         */
+        getBuffer(width: number, height: number): RenderingContext;
+
+        /**
+         * Adds cross-browser event listener for the fullscreenchange event
+         */
+        // _addFullscreenEvents() {
+        //     const target = this.target;
+
+        //     target.addEventListener('webkitfullscreenchange', this._onFullscreenChange.bind(this), false);
+        //     // Firefox doesn't seem to send this event on current fullscreen element
+        //     document.addEventListener('mozfullscreenchange', this._onFullscreenChange.bind(this), false);
+        //     target.addEventListener('fullscreenchange', this._onFullscreenChange.bind(this), false);
+        //     target.addEventListener('MSFullscreenChange', this._onFullscreenChange.bind(this), false);
+        // }
+
+        /**
+         * Handler called when `fullscreenchange` event is triggered by the browser
+         *
+         * This in turn toggles fullscreen display scaling
+         *
+         * @private
+         */
+        // _onFullscreenChange() {
+        //     var fullscreenElement = document.webkitFullscreenElement || document.fullscreenElement || document.mozFullScreenElement || document.msFullscreenElement;
+
+        //     this.isFullscreen = fullscreenElement === this.target;
+
+        //     if (!this.isFullscreen) {
+        //         // Dom(this.target).css({
+        //         //     'transform': 'scale(1.0, 1.0)'
+        //         // });
+        //         Dom(this.target).css({
+        //             width: `${this.width}px`,
+        //             height: `${this.height}px`
+        //         }).find('canvas').css({
+        //             width: `${this.width}px`,
+        //             height: `${this.height}px`,
+        //             top: 0,
+        //             left: 0
+        //         });
+        //     } else {
+        //         const size = this._getFullScreenSize(this.width, this.height);
+        //         console.log('size', size.scaleX, size.scaleY);
+        //         Dom(this.target).css({
+        //             width: `${size.width}px`,
+        //             height: `${size.height}px`
+        //         }).find('canvas').css({
+        //             width: size.width + 'px',
+        //             height: size.height + 'px',
+        //             top: size.top + 'px',
+        //             left: size.left + 'px'
+        //         });
+        //         // Dom(this.target).css({
+        //         //     'transform': `scale(${size.scaleX}, ${size.scaleY})`
+        //         // });
+
+        //     }
+        // }
+
+        /**
+         * Computes the fullscreen size: depending on the browser/device,
+         * there are different ways to get correct fullscreen pixel size
+         *
+         * @param {Number} width initial width of the screen
+         * @param {Number} height initial height of the screen
+         *
+         * @returns {Object} with new width, height, and x/y scale ratios
+         */
+        // _getFullScreenSize(width, height) {
+        //     var ratio = width / height,
+        //         needMargin = navigator.userAgent.match(/Edge|Firefox/),
+        //         isXbox = navigator.userAgent.match(/Edge/),
+        //         screenWidth = screen.width,
+        //         screenHeight = screen.height,
+        //         newWidth,
+        //         newHeight;
+        //     // both Firefox & Edge force fullscreen element to full screen size
+        //     // since our canvas element do not necessarilty take the whole screen
+        //     // we have to center them
+
+
+        //     if (isXbox) {
+        //         screenWidth = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
+        //         screenHeight = window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight;
+        //     }
+
+        //     console.log('screen', screen.width, screen.height);
+
+        //     // use height as base since it's
+        //     if (ratio > 0) {
+        //         newHeight = screenHeight;
+        //         newWidth = newHeight * ratio;
+        //     } else {
+        //         newWidth = screenWidth;
+        //         newHeight = newWidth * ratio;
+        //     }
+
+        //     return {
+        //         width: newWidth,
+        //         height: newHeight,
+        //         scaleX: newWidth / width,
+        //         scaleY: newHeight / height,
+        //         top: needMargin ? (screenHeight - newHeight) / 2 : 0,
+        //         left: needMargin ? (screenWidth - newWidth) / 2 : 0
+        //     };
+        // }
+
+        /**
+         * Toggles fullscreen display scaling
+         */
+        toggleFullscreen(): void;
+
+        /**
+         * Create game layers.
+         *
+         * This method will create this.layers.length layers plus one more
+         * used for post-rendering effects
+         *
+         * @private
+         */
+        // _createLayers() {
+        //     let i;
+
+        //     for (i = 0; i < this.layers.length; ++i) {
+        //         this.layers[i] = Dom('canvas').addClass('layer_' + i).attr({
+        //             'width': this.width,
+        //             'height': this.height
+        //         }).css({
+        //             'width': this.width + 'px',
+        //             'height': this.height + 'px',
+        //             'position': 'absolute',
+        //             zIndex: this._getLayerZIndex(i)
+        //         }).appendTo(this.target)[0].getContext(this.type);
+
+        //         this.layers[i]['imageSmoothingEnabled'] = false;
+        //     }
+
+        //     this.fxCtx = Dom('canvas').addClass('fx').attr({
+        //         'width': this.width,
+        //         'height': this.height
+        //     }).css({
+        //         'width': this.width + 'px',
+        //         'height': this.height + 'px',
+        //         'position': 'absolute',
+        //         zIndex: 3
+        //     }).appendTo(this.target)[0].getContext(this.type);
+
+        //     this.fxCtx['imageSmoothingEnabled'] = false;
+        // }
+
+        /**
+         * Returns the zIndex property of the specified layer canvas
+         *
+         * @param {Number} layer The layer number.
+         *
+         * @private
+         */
+        // _getLayerZIndex(layer) {
+        //     // normal layer
+        //     if (layer < this.layersIndex.length) {
+        //         const isBackground = this.layersIndex[layer];
+        //         return isBackground ? 0 : 2;
+        //     } else {
+        //         // map is always set to 1 for now
+        //         return 1;
+        //     }
+        // }
+
+        /**
+         * Sorts the layers by zIndex + DOM position
+         *
+         * @note: We need to keep track of the rendering order of the layers
+         * because the 'post' effects need the composited layer
+         */
+        // _sortLayers() {
+        //     // first we need to render background layers
+        //     let sortedLayers = [];
+
+        //     this.layersIndex.forEach((isBackground, index) => {
+        //         if (isBackground) {
+        //             sortedLayers.push(index);
+        //         }
+        //     });
+        //     // then map
+        //     sortedLayers.push(this.layers.length - 1);
+
+        //     // then forground layers
+        //     this.layersIndex.forEach((isBackground, index) => {
+        //         if (!isBackground) {
+        //             sortedLayers.push(index);
+        //         }
+        //     });
+
+        //     return sortedLayers;
+        // }
+
+        /**
+         * Changes the zIndex property of the specified layer canvas
+         *
+         * @param {Number} layer The layer number.
+         * @param {Number} zIndex The new zIndex value for this layer
+         */
+        setLayerZIndex(layer: number, zIndex: number): void;
+
+        /**
+         * Clears a canvas display buffer
+         *
+         * @param {RenderingContext} ctx The context to clear
+         */
+        clearScreen(ctx: RenderingContext): void;
+
+        /**
+         * Clears every rendering buffer, including the special fxCtx one
+         */
+        clearAllScreens(): void;
+
+        /**
+         * Changes the (CSS) opacity of a canvas
+         *
+         * @param {Canvas} canvas The Canvas HTML element.
+         * @param {Number} opacity The new opacity value for this canvas.
+         */
+        setCanvasOpacity(canvas: HTMLElement, opacity: number): void;
+
+        /**
+         * Renders the specified scene
+         *
+         * @param {Scene} scene the scene to render
+         */
+        renderScene(scene: Scene): void;
+
+        /**
+         * Prepares the canvas before rendering images.
+         *
+         * @param {Array} resources Array of resources to use.
+         *
+         * Explanation: during development, I noticed that the very first time
+         * the ctx.drawImage() was used to draw onto a canvas, it took a very long time,
+         * like at least 10ms for a very small 32x32 pixels drawImage.
+         *
+         * Subsequent calls do not have this problem and are instant.
+         * Maybe some ColorFormat conversion happens.
+         *
+         * This method makes sure that when the game starts rendering, we don't have
+         * any of these delays that can impact gameplay and alter the gameplay experience
+         * in a negative way.
+         */
+        prepareCanvas(resources: object[]): void;
+
+        /**
+         * Starts an animation on the display
+         *
+         * @param {String} fxName Name of the effect to apply.
+         * @param {Object} options
+         * @param {String} [options.easing='linear'] The easing method to use
+         * @param {String} [options.when='pre'] When is the effect applied: can be before the game frame rendering ('pre') or after ('post')
+         * @param {any} [options.context=this] The context (this) to apply to the animation.
+         * @param {any} context The context to bind the Effect to
+         */
+        animate(fxName: string, options: object, context: RenderingContext): any;
+
+        /**
+         * stops current animation
+         *
+         * TODO
+         * @private
+         */
+        stopAnimate(fxName?: string): void;
+
+        /**
+         * Executes an effect on a frame at a given time
+         *
+         * @param {RenderingContext} ctx Context that contains current frame rendering.
+         * @param {RenderingContext} fxCtx The context in which to render the transformed frame.
+         * @param {any} obj The object on which animation is applied: should be a `Drawable`.
+         * @param {any} time Unused.
+         * @param {String} when is this effect executed: 'pre' means before rendering, 'post' means after frame render.
+         */
+        executeFx(ctx: RenderingContext, fxCtx: RenderingContext, obj: Drawable, time: number, when: string): void;
+
+        /**
+         * Clears every display layer and clears fx queues
+         */
+        clearDisplay(): void;
     }
 
     export const InputManager:_InputManager;
@@ -58,12 +497,12 @@ declare module 'athenajs' {
          * @param {Map} map
          */
         constructor(map:Map);
-    
+
         /**
          * Resets the MapEvent switches, events and items
          */
         reset():void;
-    
+
         /**
          * Adds a new [`Drawable`]{#item} onto the map
          *
@@ -71,7 +510,7 @@ declare module 'athenajs' {
          * @param {Drawable} item to add
          */
         addItem(id:string, item:Drawable):void;
-    
+
         /**
          * Returns an item
          *
@@ -80,12 +519,12 @@ declare module 'athenajs' {
          * @returns {Drawable|undefined} The item or undefined if it wasn't handled by the map
          */
         getItem(id:string):Drawable|undefined;
-    
+
         // TODO: ability to trigger an event once a switch has been modified
         setSwitch(id:string, bool:boolean):void;
-    
+
         toggleSwitch(id:string):void;
-    
+
         /**
          * Retrieves a switch from the map using its id
          *
@@ -94,7 +533,7 @@ declare module 'athenajs' {
          * @returns {any} returns the switch or false if it could not be found
          */
         getSwitch(id:string):any;
-    
+
         /**
          * checks of conditions of specified trigger are valid
          *
@@ -103,11 +542,11 @@ declare module 'athenajs' {
          * @returns {Boolean} true if the trigger is valid
          */
         checkConditions(trigger:object):boolean;
-    
+
         handleAction(options:object):void;
-    
+
         handleEvent(options:object):any;
-    
+
         /**
          * Schedule adding a new object to the map
          *
@@ -118,8 +557,8 @@ declare module 'athenajs' {
          *
          */
         scheduleSprite(spriteId:string, spriteOptions:object, delay:number):Drawable;
-    
-    
+
+
         /**
          * Add a new wave of objects to the map
          * Used for example when the player triggers apparition of several enemies or bonuses
@@ -130,14 +569,14 @@ declare module 'athenajs' {
          * @related {Wave}
          */
         handleWave(options:object):boolean;
-    
+
         endWave():void;
 
         triggerEvent(id:string):void;
-    
+
         isEventTriggered(id:string):boolean;
     }
-    
+
 
     export class Behavior {
         vx:number;
@@ -147,15 +586,56 @@ declare module 'athenajs' {
         constructor(sprite:Drawable, options:BehaviorOptions);
         onUpdate(timestamp:number):void;
         onVXChange?(vx:number):void;
-        onVYChange?(vy:number):void;        
-    
+        onVYChange?(vy:number):void;
+
         /**
          * Returns current mapEvent
-         * 
+         *
          * @returns {MapEvent} the object's current map event
          */
         getMapEvent():MapEvent;
     }
+
+    interface _AudioManager {
+        audioCache: object,
+        enabled: boolean,
+        /**
+         * Adds a new sound element to the audio cache.
+         * *Note* if a sound with the same id has already been added, it will be replaced
+         * by the new one.
+         *
+         * @param {String} id
+         * @param {HTMLAudioElement} element
+         */
+        addSound(id: string, element: HTMLAudioElement): void;
+    /**
+     * Toggles global sound playback
+     *
+     * @param {Boolean} bool whether to enabled or disable sound playback.
+     */
+        toggleSound(bool: boolean): void;
+    /**
+     * Plays the specified sound with `id`.
+     *
+     * @param {String} id The id of the sound to play.
+     * @param {Boolean} [loop=false] Set to true to have the sound playback loop.
+     * @param {Number} [volume=1] a Number between 0 and 1.
+     * @param {Number} [panning=0] a Number between 10 (left) and -10 (right).
+     * @returns {Wad} the created sound instance
+     */
+        play(id: string, loop?: boolean, volume?: number, panning?: number): any;
+    /**
+     * Stops playing the sound id
+     *
+     * @param {String} id The id of the sound to stop playing.
+     * @param {any} instanceId The instanceId to use, in case several sounds with the same Id are being played.
+     *
+     * @returns {undefined}
+     */
+        stop(id: string, instanceId: any): void;
+    }
+
+    export const AudioManager: _AudioManager;
 
     interface _InputManager {
  /**
@@ -603,7 +1083,7 @@ declare module 'athenajs' {
      * @param {String} event to listen for: can be `up` or `down`
      * @param {Function} callback the function to call
      */
-    installKeyCallback(key:string, event:string, callback:() => void):void;
+    installKeyCallback(key:string, event:string, callback:(key:string, event:string) => void):void;
     removeKeyCallback(key:string, event:string, callback:() => void):void;
     clearEvents():void;
 }

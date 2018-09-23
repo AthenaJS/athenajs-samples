@@ -79,7 +79,7 @@ declare module 'athenajs' {
          *
          * @returns {Drawable|undefined} The item or undefined if it wasn't handled by the map
          */
-        getItem(id:string):Drawable?;
+        getItem(id:string):Drawable|undefined;
     
         // TODO: ability to trigger an event once a switch has been modified
         setSwitch(id:string, bool:boolean):void;
@@ -595,7 +595,7 @@ declare module 'athenajs' {
      */
     getAllKeysStatus():object;
     getKeyStatus(key:string,  latch:boolean):boolean;
-    isKeyDown(key:string,  latch:boolean):boolean;
+    isKeyDown(key:string, latch?:boolean):boolean;
     /**
      * Install callback that gets called when a key is pressed/released
      *
@@ -668,4 +668,5 @@ interface AnimOptions{
     frameWidth: number,
     frameHeight: number,
     frameDuration: number
+}
 }

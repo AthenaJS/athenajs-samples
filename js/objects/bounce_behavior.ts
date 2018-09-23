@@ -1,8 +1,8 @@
-import { Behavior, InputManager as Input } from 'athenajs';
+import { Behavior, InputManager as Input, Drawable } from 'athenajs';
 
 /* Very simple behavior for the smiley */
 class BounceBehavior extends Behavior {
-    constructor(drawable, options) {
+    constructor(drawable:Drawable, options:object) {
         super(drawable, options);
 
         this.vx = 0;
@@ -10,7 +10,7 @@ class BounceBehavior extends Behavior {
         this.gravity = 0.1;
     }
 
-    onUpdate(timestamp) {
+    onUpdate(timestamp:number) {
         const sprite = this.sprite;
 
         sprite.y += this.vy;

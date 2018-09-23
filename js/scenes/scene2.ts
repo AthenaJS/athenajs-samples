@@ -61,7 +61,7 @@ const myScene = new class objectsFxScene extends Scene {
             endValue: 2,
             duration: 1000,
             loop: Infinity,
-            callback: val => {
+            callback: (val:number) => {
                 sprite.setScale(val);
             }
         });

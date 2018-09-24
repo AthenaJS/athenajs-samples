@@ -139,7 +139,7 @@ declare module 'athenajs' {
          * @param {Number} options.startValue The start value of the effect.
          * @param {Number} options.endValue The end value of the effect.
          * @param {Number} options.duration The duration of the effect (ms).*
-         * @param {Boolean} options.loop Set to true to make the effect loop.
+         * @param {boolean} options.loop Set to true to make the effect loop.
          * @param {Display} display Reference to the Display in case a buffer is needed.
          */
         constructor(options: EffectOptions, display: Display);
@@ -190,7 +190,7 @@ declare module 'athenajs' {
          * @param {Number} [options.width=1024] The width of the display.
          * @param {Number} [options.height=768] The height of the display.
          * @param {String} [options.type] What type of rendere to use, only '2d' supported for now.
-         * @param {Array<Boolean>} [options.layers] An array describing each layer that will be added: [true, true] will create two background layers, set to true for a foreground layer.
+         * @param {Array<boolean>} [options.layers] An array describing each layer that will be added: [true, true] will create two background layers, set to true for a foreground layer.
          * @param {String} options.name The name of the display.
          * @param {(String|HTMLElement)} target The target where the game DOM element should be appended.
          */
@@ -539,7 +539,7 @@ declare module 'athenajs' {
          *
          * @param {Object} trigger The trigger to check.
          *
-         * @returns {Boolean} true if the trigger is valid
+         * @returns {boolean} true if the trigger is valid
          */
         checkConditions(trigger:object):boolean;
 
@@ -564,7 +564,7 @@ declare module 'athenajs' {
          * Used for example when the player triggers apparition of several enemies or bonuses
          *
          * @param {Object} options The options to pass to the wav object
-         * @returns {Boolean}
+         * @returns {boolean}
          *
          * @related {Wave}
          */
@@ -611,14 +611,14 @@ declare module 'athenajs' {
     /**
      * Toggles global sound playback
      *
-     * @param {Boolean} bool whether to enabled or disable sound playback.
+     * @param {boolean} bool whether to enabled or disable sound playback.
      */
         toggleSound(bool: boolean): void;
     /**
      * Plays the specified sound with `id`.
      *
      * @param {String} id The id of the sound to play.
-     * @param {Boolean} [loop=false] Set to true to have the sound playback loop.
+     * @param {boolean} [loop=false] Set to true to have the sound playback loop.
      * @param {Number} [volume=1] a Number between 0 and 1.
      * @param {Number} [panning=0] a Number between 10 (left) and -10 (right).
      * @returns {Wad} the created sound instance
@@ -1051,102 +1051,102 @@ declare module 'athenajs' {
     //         }
     //     });
 
-    //     document.addEventListener('keyup', (event) => {
-    //         if (this.inputMode !== 'keyboard' || this.playingEvents) {
-    //             return;
-    //         }
+        //     document.addEventListener('keyup', (event) => {
+        //         if (this.inputMode !== 'keyboard' || this.playingEvents) {
+        //             return;
+        //         }
 
-    //         if (event.keyCode) {
-    //             this.keyPressed[event.keyCode] = false;
-    //             this.latches[event.keyCode] = false;
-    //         }c
+        //         if (event.keyCode) {
+        //             this.keyPressed[event.keyCode] = false;
+        //             this.latches[event.keyCode] = false;
+        //         }c
 
-    //         // console.log('keyup', event.keyCode, '<-', this.keyPressed[37], '->', this.keyPressed[39]);
+        //         // console.log('keyup', event.keyCode, '<-', this.keyPressed[37], '->', this.keyPressed[39]);
 
-    //         this.metas = this._getModifiers();
+        //         this.metas = this._getModifiers();
 
-    //         if (this.enabled && this.keyCb[event.keyCode]) {
-    //             this.keyCb[event.keyCode].up.forEach((callback) => { callback(String.fromCharCode(event.keyCode), event); });
-    //         }
-    //     });
-    // },
-    /**
-     * Returns an object with the state of all keys
-     */
-    getAllKeysStatus():object;
-    getKeyStatus(key:string,  latch:boolean):boolean;
-    isKeyDown(key:string, latch?:boolean):boolean;
-    /**
-     * Install callback that gets called when a key is pressed/released
-     *
-     * @param {String} key space-separated list of keys to listen for
-     * @param {String} event to listen for: can be `up` or `down`
-     * @param {Function} callback the function to call
-     */
-    installKeyCallback(key:string, event:string, callback:(key:string, event:string) => void):void;
-    removeKeyCallback(key:string, event:string, callback:() => void):void;
-    clearEvents():void;
-}
+        //         if (this.enabled && this.keyCb[event.keyCode]) {
+        //             this.keyCb[event.keyCode].up.forEach((callback) => { callback(String.fromCharCode(event.keyCode), event); });
+        //         }
+        //     });
+        // },
+        /**
+         * Returns an object with the state of all keys
+         */
+        getAllKeysStatus():object;
+        getKeyStatus(key:string,  latch:boolean):boolean;
+        isKeyDown(key:string, latch?:boolean):boolean;
+        /**
+         * Install callback that gets called when a key is pressed/released
+         *
+         * @param {String} key space-separated list of keys to listen for
+         * @param {String} event to listen for: can be `up` or `down`
+         * @param {Function} callback the function to call
+         */
+        installKeyCallback(key:string, event:string, callback:(key:string, event:string) => void):void;
+        removeKeyCallback(key:string, event:string, callback:() => void):void;
+        clearEvents():void;
+    }
 
-/* Dom support */
-interface _Dom<TElement = HTMLElement> extends Iterable<TElement>{
-    [key: number]: HTMLElement;
-    length: number;
-    css(prop: object): _Dom;
-    css(prop: string): _Dom;
-    css(prop: string, val: string): _Dom;
-    find(selector: string): _Dom;
-    appendTo(selector: string | _Dom): _Dom;
-    attr(att: string | object, val?: string): _Dom;
-    addClass(classes: string): _Dom;
-    removeClass(classes: string): _Dom;
-    html(str: string): _Dom;
-    show(): _Dom;
-    hide(): _Dom;
-}
+    /* Dom support */
+    interface _Dom<TElement = HTMLElement> extends Iterable<TElement>{
+        [key: number]: HTMLElement;
+        length: number;
+        css(prop: object): _Dom;
+        css(prop: string): _Dom;
+        css(prop: string, val: string): _Dom;
+        find(selector: string): _Dom;
+        appendTo(selector: string | _Dom): _Dom;
+        attr(att: string | object, val?: string): _Dom;
+        addClass(classes: string): _Dom;
+        removeClass(classes: string): _Dom;
+        html(str: string): _Dom;
+        show(): _Dom;
+        hide(): _Dom;
+    }
 
-/* Game Support */
-interface GameOptions{
-    name: string,
-    showFps: boolean,
-    width: number,
-    height: number,
-    debug: boolean
-}
+    /* Game Support */
+    interface GameOptions{
+        name: string,
+        showFps: boolean,
+        width: number,
+        height: number,
+        debug: boolean
+    }
 
-interface SceneOptions{
+    interface SceneOptions{
 
-}
+    }
 
-interface DrawableOptions{
-    objectId: number;
-    layer: number;
-}
+    interface DrawableOptions{
+        objectId: number;
+        layer: number;
+    }
 
-interface SimpleTextOptions{
+    interface SimpleTextOptions{
 
-}
+    }
 
-interface PaintOptions {
+    interface PaintOptions {
 
-}
+    }
 
-interface BitmapTextOptions{
+    interface BitmapTextOptions{
 
-}
+    }
 
-interface SpriteOptions {
+    interface SpriteOptions {
 
-}
+    }
 
-interface BehaviorOptions {
+    interface BehaviorOptions {
 
-}
+    }
 
-interface AnimOptions{
-    numFrames: number,
-    frameWidth: number,
-    frameHeight: number,
-    frameDuration: number
-}
+    interface AnimOptions{
+        numFrames: number,
+        frameWidth: number,
+        frameHeight: number,
+        frameDuration: number
+    }
 }

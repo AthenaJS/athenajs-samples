@@ -1,4 +1,4 @@
-import { Paint, Behavior } from 'athenajs';
+import { Paint } from 'athenajs';
 //     this.y += this.vy;
     //     this.vy += this.gravity;
 
@@ -14,8 +14,8 @@ import { Paint, Behavior } from 'athenajs';
 * @extends {Circle}
 */
 class Smiley extends Paint {
-    constructor(options) {
-        super(Paint.name, options);
+    constructor(options:object) {
+        super('smiley', options);
         // this.vx = 0;
         // this.vy = 0;
         // this.gravity = 0.1;

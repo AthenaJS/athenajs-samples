@@ -1,19 +1,20 @@
-import { Scene, FX, Effect, SimpleText, InputManager as Input } from 'athenajs';
+import { Scene, FX, Effect, SimpleText, InputManager as Input, Display, EffectOptions } from 'athenajs';
 import { MyFont } from '../objects/sample_objects';
 
 class Skew extends Effect {
-    constructor(options, display) {
-        super(Object.assign({
+    constructor(options:EffectOptions, display:Display) {
+        super({
             startValue: Math.PI / 3,
             endValue: 0,
             when: 'post'
-        }, options), display);
+            , ...options
+        }, display);
 
         this.buffer = display.getBuffer(this.width, this.height);
     }
 
-    process(ctx, fxCtx) {
-        super.process();
+    process(ctx: CanvasRenderingContext2D, fxCtx?: CanvasRenderingContext2D, obj?:any) {
+        super.process(ctx, fxCtx);
 
         var val = this.startValue - this.animProgress * this.startValue;
 
@@ -31,6 +32,7 @@ FX.addFX('Skew', Skew);
 
 // create a new scene
 const myScene = new class objectsScene extends Scene {
+    effectInProcess: boolean;
     setup() {
         this.loadImage('img/bitmapFont.png', 'myFont');
     }
@@ -57,7 +59,7 @@ const myScene = new class objectsScene extends Scene {
         this.effectInProcess = false;
     }
 
-    applyEffect(effect) {
+    applyEffect(effect:number) {
 
         let promise;
 

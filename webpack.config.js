@@ -4,7 +4,7 @@ var path = require('path'),
 module.exports = {
     entry: [
         'webpack-dev-server/client?http://127.0.0.1:8888',
-        './js/index.js'
+        './src/index.ts'
     ],
     output: {
         path: __dirname,
@@ -12,15 +12,22 @@ module.exports = {
         pathinfo: true
     },
     devtool: 'source-map',
+    mode: 'development',
     module: {
         rules: [
             {
-                test: /\.js$/,
-                loader: 'babel-loader?presets[]=es2015',
-                exclude: /node_modules|athena\.js/
+                test: /\.(t|j)sx?$/,
+                use: {
+                    loader: 'awesome-typescript-loader'
+                }
             },
+            // {
+            //     test: /\.js$/,
+            //     loader: 'babel-loader?presets[]=es2015',
+            //     exclude: /node_modules|athena\.js/
+            // },
             {
-                test: /athena\.js$/,
+                test: /\.ts$/,
                 use: ["source-map-loader"],
                 enforce: "pre"
             }
@@ -35,6 +42,9 @@ module.exports = {
     resolve: {
         modules: [
             'node_modules'
+        ],
+        extensions: [
+            '.ts', '.js'
         ]
 
     },

@@ -46,7 +46,6 @@ module.exports = {
         extensions: [
             '.ts', '.js'
         ]
-
     },
     plugins: [
         new WebpackNotifierPlugin({

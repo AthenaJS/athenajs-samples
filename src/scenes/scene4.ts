@@ -71,6 +71,7 @@ const myScene = new class objectsScene extends Scene {
 
         switch (effect) {
             case 1:
+            default:
                 promise = this.fadeIn(2000);
                 break;
 
